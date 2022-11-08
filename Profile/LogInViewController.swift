@@ -9,11 +9,14 @@ import UIKit
 
 class LogInViewController: UIViewController {
     
+    let custonButton = CustomButton.init(buttonTitle: "NEW BUTT", buttonColor: .red, titleColor: .white)
+    
+    
 
     private lazy var logo = UIImageView()
   lazy var email = UITextField()
   lazy var password = UITextField()
- private lazy var loginButton = UIButton()
+  lazy var loginButton = UIButton()
     
     var loginDelegate: LoginViewControllerDelegate = LoginInspector()
   
@@ -64,16 +67,16 @@ class LogInViewController: UIViewController {
         password.isSecureTextEntry = true
         self.view.addSubview(password)
         
-        loginButton.backgroundColor = UIColor(named: "MyColor")
-        loginButton.setTitle("Log in", for: .normal)
+        loginButton.backgroundColor = custonButton.buttonColor
+        loginButton.setTitle(custonButton.buttonTitle, for: .normal)
         loginButton.setTitleColor(.white, for: .normal)
         loginButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
         loginButton.layer.masksToBounds = false
         loginButton.translatesAutoresizingMaskIntoConstraints = false
-        loginButton.layer.cornerRadius = 10
-        loginButton.addTarget(self, action: #selector(loginButtonPressed), for: .touchUpInside)
-        self.view.addSubview(loginButton)
+        custonButton.action(loginButton)
         
+
+        self.view.addSubview(loginButton)
         constraints()
 
     }
@@ -90,40 +93,23 @@ class LogInViewController: UIViewController {
         self.view.endEditing(true)
     }
    
-    @objc func loginButtonPressed(sender: UIButton) {
-        let profileViewController = ProfileViewController()
-        if  loginDelegate.check(login: email.text!, password: password.text!) == true
-                              {
-            self.navigationController?.pushViewController(profileViewController, animated: true)
-        } else
-                                {
-    
-            let alert = UIAlertController(title: "Ошибка",
-                                        message: "Неправильный логин или пароль",
-                                        preferredStyle: .alert)
-                                alert.addAction(UIAlertAction(title: "Попробую снова", style: .cancel, handler: nil))
-                                    self.present(alert, animated: true)
-                                    }
-      
-        
-        
-//        #if DEBUG
-//        let y = TestUserService()
-//        #else
-//        let y = CurrentUserService()
-//        #endif
-//        let q = y.authorise(login: email.text, password: password.text )
-//        if (q != nil) { self.navigationController?.pushViewController(profileViewController, animated: true)
-//        }  else {
-//                        let alert = UIAlertController(title: "Ошибка",
-//                                                      message: "Неправильный логин или пароль",
-//                                                      preferredStyle: .alert)
-//                         alert.addAction(UIAlertAction(title: "Попробую снова", style: .cancel, handler: nil))
-//                        self.present(alert, animated: true)
-//                    }
-   
-     
-    }
+//    @objc func loginButtonPressed(sender: UIButton) {
+//        let profileViewController = ProfileViewController()
+//        if  loginDelegate.check(login: email.text!, password: password.text!) == true
+//                              {
+//            self.navigationController?.pushViewController(profileViewController, animated: true)
+//        } else
+//                                {
+//
+//            let alert = UIAlertController(title: "Ошибка",
+//                                        message: "Неправильный логин или пароль",
+//                                        preferredStyle: .alert)
+//                                alert.addAction(UIAlertAction(title: "Попробую снова", style: .cancel, handler: nil))
+//                                    self.present(alert, animated: true)
+//                                    }
+//
+//
+//    }
     private func constraints() {
         let safeArea = view.safeAreaLayoutGuide
      NSLayoutConstraint.activate([
@@ -154,7 +140,6 @@ class LogInViewController: UIViewController {
     }
   
 }
- 
 
 
 
