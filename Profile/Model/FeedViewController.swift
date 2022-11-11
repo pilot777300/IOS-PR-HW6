@@ -10,16 +10,11 @@ import UIKit
 class FeedViewController: UIViewController {
 
     
-   private lazy var checkGuessButton: UIButton = {
-        let btn =  UIButton()
-        btn.backgroundColor = .systemBlue
-        btn.layer.cornerRadius = 12
-        btn.setTitle("Проверить", for: .normal)
-        btn.backgroundColor = .blue
-        btn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
-        btn.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
-        btn.translatesAutoresizingMaskIntoConstraints = false
-        return btn
+    private lazy var checkGuessButton: CustomButton = {
+        let button = CustomButton(buttonTitle: "ПРОВЕРИТЬ", buttonColor: .systemBlue) { [unowned self]  in
+           buttonAction()
+        }
+        return button
     }()
     
     
@@ -74,23 +69,17 @@ class FeedViewController: UIViewController {
         setConstraints()
         }
             
-        @objc private func buttonAction() {
+         private func buttonAction() {
+             
                 let feedModel = FeedModel()
-                let custom = CustomButton.init(buttonTitle: "ПРАВИЛЬНО!!!",
-                                               buttonColor: .green,
-                                               titleColor: .black)
-               
                 if textfield.text != nil && textfield.text == feedModel.secretWord  {
-                    guessColor.backgroundColor = custom.buttonColor
-                    guessColor.text = custom.buttonTitle
-                    guessColor.textColor = custom.titleColor
+                    guessColor.backgroundColor = .green//custom.buttonColor
+                    guessColor.text = "YES!!!!"
+                    guessColor.textColor = .black
                 } else {
-                    let custom = CustomButton.init(buttonTitle: "ОШИБКА",
-                                                   buttonColor: .red,
-                                                   titleColor: .black)
-                        guessColor.backgroundColor = custom.buttonColor
-                        guessColor.text = custom.buttonTitle
-                        guessColor.textColor = custom.titleColor
+                    guessColor.backgroundColor = .red
+                        guessColor.text = "ОШИБКА"
+                    guessColor.textColor = .black
                     }
                 }
             }
